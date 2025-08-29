@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Price Prediction System - Professional Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 100%);
+            color: white;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 215, 0, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100vh) rotate(180deg); opacity: 1; }
+        }
+
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1400px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 60px 80px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideEnter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active::before {
+            left: 100%;
+        }
+
+        @keyframes slideEnter {
+            from {
+                opacity: 0;
+                transform: translateY(40px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* Typography with animations */
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6)); }
+        }
+
+        h2 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #ffd700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #94a3b8;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: #e2e8f0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            font-weight: 300;
+        }
+
+        /* Enhanced feature grid with staggered animations */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideIn 0.6s ease-out both;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Advanced tech stack with 3D effects */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .tech-item {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(15px);
+            padding: 30px 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            animation: techItemFade 0.8s ease-out both;
+            transform-style: preserve-3d;
+        }
+
+        .tech-item:nth-child(1) { animation-delay: 0.1s; }
+        .tech-item:nth-child(2) { animation-delay: 0.2s; }
+        .tech-item:nth-child(3) { animation-delay: 0.3s; }
+        .tech-item:nth-child(4) { animation-delay: 0.4s; }
+        .tech-item:nth-child(5) { animation-delay: 0.5s; }
+        .tech-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes techItemFade {
+            from {
+                opacity: 0;
+                transform: rotateY(-30deg) translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0) translateX(0);
+            }
+        }
+
+        .tech-item:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        /* Performance metrics with animated counters */
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 50%, #581c87 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: metricSlideUp 0.8s ease-out both;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:nth-child(1) { animation-delay: 0.2s; }
+        .metric-card:nth-child(2) { animation-delay: 0.4s; }
+
+        @keyframes metricSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Animated workflow steps */
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .workflow-line {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #f59e0b);
+            animation: lineGrow 2s ease-out 1s both;
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .step {
+            text-align: center;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            animation: stepPop 0.6s ease-out both;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.5s; }
+        .step:nth-child(2) { animation-delay: 0.7s; }
+        .step:nth-child(3) { animation-delay: 0.9s; }
+        .step:nth-child(4) { animation-delay: 1.1s; }
+
+        @keyframes stepPop {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #ffd700, #f59e0b);
+            color: #1e3c72;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .step-number:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Enhanced navigation */
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+            animation: navSlideUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes navSlideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .nav-btn {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Slide counter with animations */
+        .slide-counter {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            backdrop-filter: blur(20px);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: counterSlideIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes counterSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Enhanced styling for content sections */
+        ul {
+            text-align: left;
+            margin: 30px 0;
+            animation: listFadeIn 1s ease-out 0.6s both;
+        }
+
+        @keyframes listFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 10px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        li:hover {
+            color: #ffd700;
+        }
+
+        li::before {
+            content: '▶';
+            position: absolute;
+            left: -15px;
+            color: #ffd700;
+            font-size: 0.8em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700, #f59e0b);
+            color: #0f172a;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+            animation: highlightGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes highlightGlow {
+            0% { box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3); }
+            100% { box-shadow: 0 4px 16px rgba(255, 215, 0, 0.6); }
+        }
+
+        .demo-section {
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: sectionSlideIn 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes sectionSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .code-snippet {
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            text-align: center;
+            margin: 25px 0;
+            border-left: 4px solid #ffd700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            animation: codeTypeIn 2s ease-out 0.8s both;
+        }
+
+        @keyframes codeTypeIn {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+
+        /* Conclusion section styling */
+        .conclusion-highlight {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            animation: conclusionPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes conclusionPulse {
+            0% { 
+                border-color: rgba(255, 215, 0, 0.3);
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+            }
+            100% { 
+                border-color: rgba(255, 215, 0, 0.6);
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #f59e0b);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+                width: 95%;
+            }
+            
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            p, li { font-size: 1.2rem; }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .workflow-line {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="feature-icon">💰</div>
+            <h1>Gold Price Prediction System</h1>
+            <p class="subtitle">Advanced Machine Learning Solution for Financial Market Analysis</p>
+            <div style="margin-top: 60px;">
+                <p style="font-size: 1.8rem; color: #94a3b8; font-weight: 300;">Leveraging Market Indicators to Predict Gold Prices</p>
+                <p style="font-size: 1.4rem; color: #cbd5e1; margin-top: 30px; font-weight: 300;">Developed using Python & Machine Learning</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem Statement -->
+        <div class="slide">
+            <h2>📊 Problem Statement</h2>
+            <div style="text-align: left; margin: 50px 0;">
+                <h3>Business Challenge:</h3>
+                <ul>
+                    <li>Gold prices are highly volatile and influenced by multiple market factors</li>
+                    <li>Traditional analysis methods are time-consuming and often inaccurate</li>
+                    <li>Need for real-time, data-driven predictions for investment decisions</li>
+                    <li>Manual market analysis lacks consistency and scalability</li>
+                </ul>
+                <h3 style="margin-top: 40px;">Our Solution:</h3>
+                <p style="font-size: 1.6rem; color: #94a3b8; margin-top: 20px;">An automated machine learning system that analyzes key market indicators to predict gold prices with high accuracy</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: System Overview -->
+        <div class="slide">
+            <h2>🎯 System Overview</h2>
+            <div class="workflow-steps">
+                <div class="workflow-line"></div>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Data Collection</h3>
+                    <p>Market indicators from multiple sources</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Model Training</h3>
+                    <p>Decision Tree Regressor with optimized parameters</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Prediction</h3>
+                    <p>Real-time gold price forecasting</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Results</h3>
+                    <p>Actionable insights for decision making</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Key Features -->
+        <div class="slide">
+            <h2>🚀 Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Multi-Factor Analysis</h3>
+                    <p>Uses S&P 500, Oil, Silver, and EUR/USD rates as predictive features</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Advanced Decision Tree algorithm with optimized hyperparameters</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Predictions</h3>
+                    <p>Instant gold price forecasts based on current market data</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>User-Friendly Interface</h3>
+                    <p>Interactive command-line interface with colorful output</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Technical Architecture -->
+        <div class="slide">
+            <h2>🔧 Technical Architecture</h2>
+            <div style="text-align: left; margin: 50px 0;">
+                <h3>Input Features:</h3>
+                <ul>
+                    <li><span class="highlight">SPX</span> - S&P 500 Index (Stock Market Performance)</li>
+                    <li><span class="highlight">USO</span> - Oil Fund Price (Energy Sector Indicator)</li>
+                    <li><span class="highlight">SLV</span> - Silver Trust Price (Precious Metals Correlation)</li>
+                    <li><span class="highlight">EUR/USD</span> - Currency Exchange Rate (Economic Stability)</li>
+                </ul>
+                <h3 style="margin-top: 40px;">Model Specifications:</h3>
+                <ul>
+                    <li>Algorithm: Decision Tree Regressor</li>
+                    <li>Max Depth: 10 (prevents overfitting)</li>
+                    <li>Min Samples Split: 5 (ensures robust splits)</li>
+                    <li>Random State: 42 (reproducible results)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Technology Stack -->
+        <div class="slide">
+            <h2>💻 Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h3>🐍 Python</h3>
+                    <p>Core Programming Language</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🤖 Scikit-learn</h3>
+                    <p>Machine Learning Framework</p>
+                </div>
+                <div class="tech-item">
+                    <h3>📊 Pandas</h3>
+                    <p>Data Manipulation</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🔢 NumPy</h3>
+                    <p>Numerical Computing</p>
+                </div>
+                <div class="tech-item">
+                    <h3>🎨 Colorama</h3>
+                    <p>Enhanced UI Experience</p>
+                </div>
+                <div class="tech-item">
+                    <h3>💾 Pickle</h3>
+                    <p>Model Serialization</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Model Performance -->
+        <div class="slide">
+            <h2>📈 Model Performance</h2>
+            <div class="performance-metrics">
+                <div class="metric-card">
+                    <div class="metric-value">Low MAE</div>
+                    <h3>Mean Absolute Error</h3>
+                    <p>Measures average prediction accuracy in dollars</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">High R²</div>
+                    <h3>R-Squared Score</h3>
+                    <p>Indicates model's ability to explain price variations</p>
+                </div>
+            </div>
+            <div style="margin-top: 50px;">
+                <h3>Feature Importance Analysis</h3>
+                <p>The system automatically ranks which market indicators have the strongest influence on gold prices, providing insights into market dynamics</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: System Components -->
+        <div class="slide">
+            <h2>🔧 System Components</h2>
+            <div style="text-align: left; margin: 50px 0;">
+                <h3>1. Model Training Module (model_train.py)</h3>
+                <ul>
+                    <li>Loads and validates historical market data</li>
+                    <li>Performs data cleaning and preprocessing</li>
+                    <li>Trains Decision Tree model with cross-validation</li>
+                    <li>Evaluates performance metrics</li>
+                    <li>Saves trained model for deployment</li>
+                </ul>
+                <h3>2. Prediction Interface (prediction.py)</h3>
+                <ul>
+                    <li>User-friendly command-line interface</li>
+                    <li>Input validation and error handling</li>
+                    <li>Real-time price prediction</li>
+                    <li>Colorful output formatting</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Data Flow -->
+        <div class="slide">
+            <h2>📊 Data Flow Process</h2>
+            <div class="demo-section">
+                <h3>Training Phase:</h3>
+                <div class="code-snippet">
+                    CSV Data → Data Validation → Feature Engineering → Model Training → Performance Evaluation → Model Serialization
+                </div>
+                <h3>Prediction Phase:</h3>
+                <div class="code-snippet">
+                    User Input → Input Validation → Model Loading → Price Prediction → Result Display
+                </div>
+                <h3>Key Data Validations:</h3>
+                <ul style="margin-top: 30px;">
+                    <li>Missing value detection and handling</li>
+                    <li>Feature completeness verification</li>
+                    <li>Numeric input validation</li>
+                    <li>Model file integrity checks</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Business Value -->
+        <div class="slide">
+            <h2>💼 Business Value</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Time Efficiency</h3>
+                    <p>Reduces analysis time from hours to seconds</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Improved Accuracy</h3>
+                    <p>Data-driven predictions over manual analysis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Scalability</h3>
+                    <p>Can handle multiple predictions simultaneously</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Cost Reduction</h3>
+                    <p>Minimizes manual analysis costs</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Implementation & Deployment -->
+        <div class="slide">
+            <h2>🚀 Implementation & Deployment</h2>
+            <div style="text-align: left; margin: 50px 0;">
+                <h3>Current Implementation:</h3>
+                <ul>
+                    <li>Standalone Python application</li>
+                    <li>Command-line interface for easy operation</li>
+                    <li>Modular design for easy maintenance</li>
+                    <li>Comprehensive error handling</li>
+                </ul>
+                <h3>Future Enhancement Opportunities:</h3>
+                <ul>
+                    <li>Web-based dashboard interface</li>
+                    <li>Real-time data integration via APIs</li>
+                    <li>Multiple ML model comparison</li>
+                    <li>Historical trend visualization</li>
+                    <li>Automated retraining pipeline</li>
+                    <li>Mobile application development</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusion -->
+        <div class="slide">
+            <h2>🎯 Conclusion</h2>
+            <div style="margin: 50px 0;">
+                <h3>Project Achievements:</h3>
+                <ul style="text-align: left; margin: 30px 0;">
+                    <li>Successfully developed a functional gold price prediction system</li>
+                    <li>Implemented robust data validation and error handling</li>
+                    <li>Created an intuitive user interface</li>
+                    <li>Achieved reliable performance metrics</li>
+                </ul>
+                <div class="conclusion-highlight">
+                    <h3 style="color: #ffd700; margin-bottom: 25px;">Ready for Production Deployment</h3>
+                    <p style="font-size: 1.6rem; margin-top: 20px; font-weight: 400;">This system demonstrates practical application of machine learning in financial analysis and is prepared for integration into existing business workflows.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Initialize particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateProgressBar();
+            
+            // Add entrance animation to slide content
+            const activeSlide = slides[index];
+            const elements = activeSlide.querySelectorAll('h1, h2, h3, p, .feature-card, .tech-item, .metric-card, .step');
+            elements.forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, i * 100);
+            });
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            } else if (e.key === 'Home') {
+                currentSlideIndex = 0;
+                showSlide(currentSlideIndex);
+            } else if (e.key === 'End') {
+                currentSlideIndex = totalSlides - 1;
+                showSlide(currentSlideIndex);
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left - next slide
+                } else {
+                    previousSlide(); // Swipe right - previous slide
+                }
+            }
+        }
+
+        // Add click animation to nav buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 215, 0, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - e.target.getBoundingClientRect().left) + 'px';
+                ripple.style.top = (e.clientY - e.target.getBoundingClientRect().top) + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation CSS
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            .nav-btn {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(rippleStyle);
+
+        // Initialize
+        createParticles();
+        updateProgressBar();
+        showSlide(0);
+
+        // Preload animations for better performance
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add subtle animation to slide counter
+            const counter = document.querySelector('.slide-counter');
+            setInterval(() => {
+                counter.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    counter.style.transform = 'scale(1)';
+                }, 200);
+            }, 5000);
+        });
+
+        // Auto-advance slides (uncomment if desired)
+        // let autoAdvanceTimer;
+        // function startAutoAdvance() {
+        //     autoAdvanceTimer = setInterval(() => {
+        //         nextSlide();
+        //     }, 10000); // 10 seconds per slide
+        // }
+        
+        // function stopAutoAdvance() {
+        //     clearInterval(autoAdvanceTimer);
+        // }
+        
+        // Start auto-advance
+        // startAutoAdvance();
+        
+        // Pause auto-advance on user interaction
+        // document.addEventListener('keydown', stopAutoAdvance);
+        // document.addEventListener('click', stopAutoAdvance);
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
